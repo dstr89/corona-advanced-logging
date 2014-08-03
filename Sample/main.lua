@@ -24,7 +24,7 @@ local function main()
 	-------------------------------------------------
 	-- SETUP ADVANCED LOGGING MODULE
 	-------------------------------------------------
-	log:set(db, "danstrmecki@gmail.com")
+	log:set(db, "your_email_adress@gmail.com")
 	
 	-------------------------------------------------
 	-- TEST ADVANCED LOGGING MODULE

@@ -16,15 +16,18 @@ db = sqlite3.open(path)
 -------------------------------------------------
 -- SETUP ADVANCED LOGGING MODULE
 -------------------------------------------------
-log:set(db, "danstrmecki@gmail.com")
+log:set(db, "your_email_adress@gmail.com")
 
 -------------------------------------------------
 -- TEST ADVANCED LOGGING MODULE
 -------------------------------------------------
--- Simple logging, instead of print
+
+-- Simple logging, use it instead of print
 log:log("Advanced logging module is now ready")
--- Here we make an intentional error to test Advanced logging module
+
+-- Here we make an intentional error to test error reporting
 asd = asd .. "asd"
+
 ```
 
 How logging works (module name and line number are only avaliable in simulator):
