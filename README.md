@@ -23,20 +23,16 @@ Check out the sample Corona project in this repository. Quick preview:
 -------------------------------------------------
 local path = system.pathForFile("sample.db", system.DocumentsDirectory)
 db = sqlite3.open(path)  
-
 -------------------------------------------------
 -- SETUP ADVANCED LOGGING MODULE
 -------------------------------------------------
 log:set(db, "your_email_adress@gmail.com")
-
 -------------------------------------------------
 -- TEST ADVANCED LOGGING MODULE
 -------------------------------------------------
-
 -- Simple logging, use it instead of print
 log:log("Advanced logging module is now ready")
-
--- Here we make an intentional error to test error reporting
+-- Now we make an intentional error to test error reporting
 asd = asd .. "asd"
 
 ```
@@ -81,3 +77,5 @@ Runtime errors get automaticly logged and user gets prompt to report error to ad
 Administrator receives an email containing device / platform info and log files.
 
 ![alt tag](https://raw.githubusercontent.com/promptcode/CoronaAdvancedLogging/master/Images/ss2.png)
+
+And thats it. Feel free to contact me with your suggestions.
