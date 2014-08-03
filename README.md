@@ -18,6 +18,11 @@ Check out the sample Corona project in this repository. Quick preview:
 
 ```lua
 -------------------------------------------------
+-- REQUIRE MODULES
+-------------------------------------------------
+local sqlite3 = require("sqlite3");
+local log = require("log")
+-------------------------------------------------
 -- SETUP DATABASE CONNECTION
 -- Required to use Advanced logging module
 -------------------------------------------------
@@ -25,12 +30,13 @@ local path = system.pathForFile("sample.db", system.DocumentsDirectory)
 db = sqlite3.open(path)  
 -------------------------------------------------
 -- SETUP ADVANCED LOGGING MODULE
+-- This is the simple setup, see properties and defaults
 -------------------------------------------------
 log:set(db, "your_email_adress@gmail.com")
 -------------------------------------------------
 -- TEST ADVANCED LOGGING MODULE
 -------------------------------------------------
--- Simple logging, use it instead of print
+-- Simple logging, use log instead of print
 log:log("Advanced logging module is now ready")
 -- Now we make an intentional error to test error reporting
 asd = asd .. "asd"
