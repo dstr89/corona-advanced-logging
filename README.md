@@ -5,7 +5,7 @@ Used for error handleing and logging events to console and a set of rolling text
 
 Module setup and logging events:
 
-```sh
+```lua
 -------------------------------------------------
 -- SETUP DATABASE CONNECTION
 -- Required to use Advanced logging module
@@ -27,4 +27,4 @@ log:log("Advanced logging module is now ready")
 asd = asd .. "asd"
 ```
 
-![alt tag](https://raw.github.com/username/projectname/branch/path/to/img.png)
+![alt tag](https://raw.githubusercontent.com/promptcode/CoronaAdvancedLogging/master/Images/ss0.png)
