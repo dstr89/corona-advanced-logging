@@ -37,7 +37,7 @@ asd = asd .. "asd"
 
 ```
 
-##Properties and default##
+##Properties and defaults##
 
 You can easily change any of log table / object properties. List of currenly used properties:
 
@@ -58,7 +58,8 @@ log.alertButtonReport = "Report on email"
 log.alertButtonDismiss = "Dismiss"
 log.alertEmail = ""
 log.emailSubject = "Error report"
-log.emailPreText = "Hi\n\nI want to report an error in application. Logs files are attached. Here is my device info: \n"
+log.emailPreText = "Hi\n\nI want to report an error in application. " .. 
+				   "Logs files are attached. Here is my device info: \n"
 log.emailPostText = "\n\n Thank you."
 ```
 
