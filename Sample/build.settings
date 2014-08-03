@@ -1,0 +1,32 @@
+-- Supported values for orientation:
+-- portrait, portraitUpsideDown, landscapeLeft, landscapeRight
+
+settings = {
+	
+	orientation = {
+          default = "portrait",
+          supported = {
+               "portrait", "portraitUpsideDown"
+          }
+    },
+	
+	iphone = {
+		plist = {
+			UIStatusBarHidden = true,
+			UIPrerenderedIcon = true, -- set to false for "shine" overlay
+			UIApplicationExitsOnSuspend = false,
+			CFBundleDisplayName = "Corona Logging",
+		},
+		components = {}
+	},
+	
+	android = {
+		usesPermissions =
+		{
+			"android.permission.INTERNET",
+			"android.permission.WRITE_EXTERNAL_STORAGE",
+			"android.permission.ACCESS_NETWORK_STATE",
+		},
+	},
+
+}
