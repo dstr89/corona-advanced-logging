@@ -27,4 +27,16 @@ log:log("Advanced logging module is now ready")
 asd = asd .. "asd"
 ```
 
+How logging works (module name and line number are only avaliable in simulator):
+
 ![alt tag](https://raw.githubusercontent.com/promptcode/CoronaAdvancedLogging/master/Images/ss0.png)
+
+How error reporting works:
+
+Errors are automaticly logged and user gets prompt to report error to administrator.
+
+![alt tag](https://raw.githubusercontent.com/promptcode/CoronaAdvancedLogging/master/Images/ss1.png)
+
+Administrator will recieve an email containing log files.
+
+![alt tag](https://raw.githubusercontent.com/promptcode/CoronaAdvancedLogging/master/Images/ss2.png)
