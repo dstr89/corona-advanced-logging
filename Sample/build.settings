@@ -10,6 +10,10 @@ settings = {
           }
     },
 	
+	build = {
+        neverStripDebugInfo = true
+    },
+	
 	iphone = {
 		plist = {
 			UIStatusBarHidden = true,

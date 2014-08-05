@@ -38,24 +38,43 @@ local lfs = require ("lfs")
 -- STATIC PROPERTIES
 -------------------------------------------------
 
+-- Prefix for log files
 log.fileNamePrefix = "log"
+-- Directory where to save log files
 log.directory = system.DocumentsDirectory
+-- Maximum number of log files
 log.numberOfRollingFiles = 6
-log.currentFileIndex = nil
+-- Set to true if you want to trace module name and line number on each info log message
 log.debugCalls = true
+-- Maximum depth for caller traceing
 log.debugCallDepth = 4
+-- Maximum log file size in Bytes
 log.maxFileSizeInBytes = 20480
+-- Database table name where to save log parameters
 log.tableName = "log_params"
-log.db = nil
+-- Set to true if you want an alert to popup on runtime errors
 log.alertErrors = true
+-- Title for runtime errors alert
 log.alertTitle = "Oops, an error occurred"
+-- Text for runtime errors alert
 log.alertText = "Please report this error to administrator on email:\n\n"
+-- 1st button for runtime errors alert label
 log.alertButtonReport = "Report on email"
+-- 2nd button for runtime errors alert label
 log.alertButtonDismiss = "Dismiss"
+-- Email adress on which to send error reports
 log.alertEmail = ""
+-- Erorr report email subject
 log.emailSubject = "Error report"
-log.emailPreText = "Hi\n\nI want to report an error in application. Logs files are attached. Here is my device info: \n"
+-- Erorr report email text before device / platform into
+log.emailPreText = "Hi\n\nI want to report an error in application. " ..
+				   "Logs files are attached. Here is my device info: \n"
+-- Erorr report email text after device / platform into
 log.emailPostText = "\n\n Thank you."
+
+-- Special variables used by this module
+log.currentFileIndex = nil
+log.db = nil
 
 -------------------------------------------------
 -- PRIVATE FUNCTIONS
@@ -109,8 +128,9 @@ local function logInFile(message, level, callerInfo, stackTrace )
 	end
 
 	local now = os.date( "%d.%m.%Y. %H:%M:%S" )
+	local timestamp = system.getTimer()
 	local file = io.open( path, "a" )
-	local text = now .. " - " .. level .. " - " .. message
+	local text = now .. " - " .. timestamp .. " - " .. level .. " - " .. message
 	if (callerInfo ~= nil and callerInfo ~= "") then
 		text = text .. "\n\t" .. callerInfo
 	end
@@ -239,13 +259,12 @@ function log:set(db, alertEmail, alertErrors, fileNamePrefix, directory, numberO
 	log.debugCalls = debugCalls or true
 	log.debugCallDepth = debugCallDepth or 3
 	log.maxFileSizeInBytes = maxFileSizeInBytes or 5120
-	print("Mail:" .. log.alertEmail)
 end
 
 -- Log info messages
 function log:log(message)
 	local callerInfo = ""
-	if (log.debugCalls == true and system.getInfo("environment") == "simulator") then -- This only works in simulator
+	if (log.debugCalls == true) then
 		-- Get function and line number that called this function
 		for i = 2, self.debugCallDepth + 1, 1 do 
 			local debugInfo = debug.getinfo(i)
@@ -267,7 +286,7 @@ function log:log(message)
 				end
 
 				if (callerInfo ~= "") then
-					callerInfo = callerInfo .. " -> "
+					callerInfo = callerInfo .. " <- "
 				end
 				-- Get line number
 				callerInfo = callerInfo .. debugInfo.name
