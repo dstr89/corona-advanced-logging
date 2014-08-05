@@ -96,7 +96,7 @@ log.emailPreText = "Hi\n\nI want to report an error in application. " ..
 log.emailPostText = "\n\n Thank you."
 ```
 
-##Log file contents## 
+##Log file contents##
 
 Here is an example of log file contents.
 
