@@ -6,10 +6,11 @@ Corona Advanced Logging
 Used for error handling and logging events to console and a set of rolling text log files.
 * Use it instead of print in your Corona project
 * Your messages will be printed in console but also logged in text files 
+* Every message in log file contains time, log level and caller trace (module name and line number)
 * A set of rolling text files is used so you can retrace the steps that lead to a bug
-* Runtime errors get logged automatically
-* User gets prompt on runtime error and can report it via email
-* Administrator receives device / platform info and log files in attachment
+* Runtime errors get logged automatically (including stacktrace)
+* Users get automatically prompt on runtime errors and can report them via email 
+* Application administrator receives device / platform info and log files in attachment
 
 
 ##Sample##
@@ -50,7 +51,7 @@ log:set(db, "your_email_adress@gmail.com")
 -------------------------------------------------
 -- TEST ADVANCED LOGGING MODULE
 -------------------------------------------------
--- Simple logging, use log instead of print
+-- Log your events, use log instead of print
 log:log("Advanced logging module is now ready")
 -- Here we make an intentional error to test error reporting
 asd = asd .. "asd"
@@ -67,7 +68,7 @@ log.fileNamePrefix = "log"
 log.directory = system.DocumentsDirectory
 -- Maximum number of log files
 log.numberOfRollingFiles = 6
--- Set to true if you want to trace module name and line number on each info log message
+-- Set to true if you want to trace module name and line number on each info message
 log.debugCalls = true
 -- Maximum depth for caller traceing
 log.debugCallDepth = 4
