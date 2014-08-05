@@ -16,7 +16,7 @@ Used for error handling and logging events to console and a set of rolling text 
 
 ###build.settings###
 
-Set build property neverStripDebugInfo to true for better debugging on device. Remove this when going to producion (once you are done testing).
+Set build property neverStripDebugInfo to true for better debugging on device. Remove this when going to production.
 
 ```lua
 settings = {
@@ -98,7 +98,7 @@ log.emailPostText = "\n\n Thank you."
 
 ##Log file contents## 
 
-Note that the module / Lua script name and line number are only available in simulator.
+Here is an example of log file contents.
 
 ![alt tag](https://raw.githubusercontent.com/promptcode/CoronaAdvancedLogging/master/Images/ss0.png)
 
@@ -112,4 +112,4 @@ Administrator receives an email containing device / platform info and log files.
 
 ![alt tag](https://raw.githubusercontent.com/promptcode/CoronaAdvancedLogging/master/Images/ss2.png)
 
-And thats it. Feel free to contact me with your suggestions.
+And thats it. Feel free to contact me with your suggestions (see email adress in image above).
