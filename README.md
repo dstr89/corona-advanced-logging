@@ -53,8 +53,10 @@ log:set(db, "your_email_adress@gmail.com")
 -------------------------------------------------
 -- Log your events, use log instead of print
 log:log("Advanced logging module is now ready")
+-- Log your variables, use log with multiple argumentss
 local variable = nil
 log:log("Variable", variable)
+
 -- Here we make an intentional error to test error reporting
 asd = asd .. "asd"
 ```
