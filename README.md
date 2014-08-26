@@ -95,6 +95,8 @@ log.emailPreText = "Hi\n\nI want to report an error in application. " ..
 				   "Logs files are attached. Here is my device info: \n"
 -- Erorr report email text after device / platform into
 log.emailPostText = "\n\n Thank you."
+-- Separator for multiple log messages, use \n to log each message separately
+log.separator = ", "
 ```
 
 ##Log file contents##

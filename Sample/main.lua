@@ -24,12 +24,15 @@ local function main()
 	-------------------------------------------------
 	-- SETUP ADVANCED LOGGING MODULE
 	-------------------------------------------------
-	log:set(db, "danstrmecki@gmail.com")
+	log:set(db, "your_email_adress@gmail.com")
 	
 	-------------------------------------------------
 	-- TEST ADVANCED LOGGING MODULE
 	-------------------------------------------------
-	log:log("Advanced logging module is now ready")
+	log:log("Advanced logging module is now ready", "Comment on: http://forums.coronalabs.com/topic/50004-corona-advanced-logging/")
+
+	local variable = nil
+	log:log("Variable", variable)
 
 	-------------------------------------------------
 	-- GO TO HOME SCENE (composer)

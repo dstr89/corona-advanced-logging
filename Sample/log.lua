@@ -71,6 +71,8 @@ log.emailPreText = "Hi\n\nI want to report an error in application. " ..
 				   "Logs files are attached. Here is my device info: \n"
 -- Erorr report email text after device / platform into
 log.emailPostText = "\n\n Thank you."
+-- Separator for multiple log messages, use \n to log each message separately
+log.separator = ", "
 
 -- Special variables used by this module
 log.currentFileIndex = nil
@@ -242,31 +244,13 @@ end
 local function strLength(s)
     return string.len(s)
 end
-	
--------------------------------------------------
--- PUBLIC FUNCTIONS
--------------------------------------------------
 
--- Setter for log properties
--- db is the only required parameter
-function log:set(db, alertEmail, alertErrors, fileNamePrefix, directory, numberOfRollingFiles, debugCalls, debugCallDepth, maxFileSizeInBytes)
-	log.db = db or nil
-	log.alertEmail = alertEmail or ""
-	log.alertErrors = alertErrors or true
-	log.fileNamePrefix = fileNamePrefix or "log"
-	log.directory = directory or system.DocumentsDirectory
-	log.numberOfRollingFiles = numberOfRollingFiles or 4
-	log.debugCalls = debugCalls or true
-	log.debugCallDepth = debugCallDepth or 3
-	log.maxFileSizeInBytes = maxFileSizeInBytes or 5120
-end
-
--- Log info messages
-function log:log(message)
+-- Log info message
+local function doLog(message)
 	local callerInfo = ""
 	if (log.debugCalls == true) then
 		-- Get function and line number that called this function
-		for i = 2, self.debugCallDepth + 1, 1 do 
+		for i = 2, log.debugCallDepth + 1, 1 do 
 			local debugInfo = debug.getinfo(i)
 			--table.foreach (debugInfo, print)
 
@@ -301,6 +285,47 @@ function log:log(message)
 	
 	-- Log in console
 	print(message)
+end
+	
+-------------------------------------------------
+-- PUBLIC FUNCTIONS
+-------------------------------------------------
+
+-- Setter for log properties
+-- db is the only required parameter
+function log:set(db, alertEmail, alertErrors, fileNamePrefix, directory, numberOfRollingFiles, debugCalls, debugCallDepth, maxFileSizeInBytes)
+	log.db = db or nil
+	log.alertEmail = alertEmail or ""
+	log.alertErrors = alertErrors or true
+	log.fileNamePrefix = fileNamePrefix or "log"
+	log.directory = directory or system.DocumentsDirectory
+	log.numberOfRollingFiles = numberOfRollingFiles or 4
+	log.debugCalls = debugCalls or true
+	log.debugCallDepth = debugCallDepth or 3
+	log.maxFileSizeInBytes = maxFileSizeInBytes or 5120
+end
+
+-- Log multiple info messages
+function log:log( ... )
+   local message = ""
+   local numOfArguments = arg.n
+   for i = 1, numOfArguments do
+   	  if (log.separator == "\n") then
+   	  	-- When separator is a new line then log each message separatly
+   	  	message = tostring(arg[i])
+   	  	doLog(message)
+   	  else
+   	  	-- Use sepatator and log a single message
+   	  	if (i == 1) then
+   	  		message = tostring(arg[i]);
+   	  	else
+      		message = message .. log.separator .. tostring(arg[i])
+      	end
+      	if (i == numOfArguments) then
+      		doLog(message)
+      	end
+      end
+   end
 end
 
 -- Attach event listener to catch and log errors
