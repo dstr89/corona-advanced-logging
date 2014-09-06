@@ -94,7 +94,9 @@ log.alertButtonDismiss = "Dismiss"
 -- Email adress on which to send error reports
 log.alertEmail = ""
 -- Erorr report email subject
-log.emailSubject = "Error report"
+log.emailSubjectError = "Error report"
+-- Log report email subject
+log.emailSubjectLog = "Log report"
 -- Erorr report email text before device / platform into
 log.emailPreText = "Hi\n\nI want to report an error in application. " ..
 				   "Logs files are attached. Here is my device info: \n"
@@ -103,6 +105,18 @@ log.emailPostText = "\n\n Thank you."
 -- Separator for multiple log messages, use \n to log each message separately
 log.separator = ", "
 ```
+
+
+##Functions##
+
+```lua
+-- Log events and variables
+log:log( ... )
+
+-- Send log files to administrator via email
+log:sendEmail()
+```
+
 
 ##Log file contents##
 
