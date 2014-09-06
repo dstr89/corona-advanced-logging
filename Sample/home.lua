@@ -18,6 +18,7 @@ local function handleButtonEvent( event )
          -- Here we make an intentional error to test Advanced logging module
          -------------------------------------------------
          asd = asd .. "asd"
+         --log:sendEmail()
     end
 end
 

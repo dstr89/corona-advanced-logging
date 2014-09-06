@@ -65,7 +65,9 @@ log.alertButtonDismiss = "Dismiss"
 -- Email adress on which to send error reports
 log.alertEmail = ""
 -- Erorr report email subject
-log.emailSubject = "Error report"
+log.emailSubjectError = "Error report"
+-- Log report email subject
+log.emailSubjectLog = "Log report"
 -- Erorr report email text before device / platform into
 log.emailPreText = "Hi\n\nI want to report an error in application. " ..
 				   "Logs files are attached. Here is my device info: \n"
@@ -162,46 +164,61 @@ local function fileExists(fileName, base)
 	  return exists
 end
 
+-- Send email to admistrator
+local function sendEmail(isError)
+	-- Get device info
+    local deviceInfo = 	"Platform: " .. system.getInfo("platformName") .. " " .. system.getInfo("platformVersion") .. 
+    					", Device: " .. system.getInfo("name") .. " - " .. system.getInfo("model") .. 
+    					", Arhitecure: " .. system.getInfo("architectureInfo")
+    
+    local prevLogIndex = log.currentFileIndex - 1
+	if (prevLogIndex < 1) then
+		prevLogIndex = log.numberOfRollingFiles
+	end
+	local fileName1 = log.fileNamePrefix .. "_" .. log.currentFileIndex .. ".txt"
+	local fileName2 = log.fileNamePrefix .. "_" .. prevLogIndex .. ".txt"
+
+	-- Add log files as attachments
+	local attachments = nil;
+	if (fileExists(fileName2, log.directory)) then
+		attachments = {
+					      { baseDir=log.directory, filename=fileName1, type="text/plain" },
+					      { baseDir=log.directory, filename=fileName2, type="text/plain" },
+					  }
+	else
+		attachments = {
+					      { baseDir=log.directory, filename=fileName1, type="text/plain" },
+					  }
+	end
+
+	local messageBody = ""
+	local messageSubject = ""
+	if (isError == true) then
+		messageBody = log.emailPreText .. deviceInfo .. log.emailPostText
+		messageSubject = log.emailSubjectError .. " - " .. system.getInfo("appName")
+	else
+		messageBody = deviceInfo
+		messageSubject = log.emailSubjectLog .. " - " .. system.getInfo("appName")
+	end
+
+	-- Send email to administrator
+    local options =
+		{
+		   to = { log.alertEmail },
+		   subject = messageSubject,
+		   isBodyHtml = false,
+		   body = messageBody,
+		   attachment = attachments,
+		}
+	native.showPopup("mail", options)
+end
+
 -- Handler that gets notified when the alert closes
 local function onAlertComplete( event )
     if "clicked" == event.action then
         local i = event.index
         if 1 == i then
-            -- Get device info
-            local deviceInfo = 	"Platform: " .. system.getInfo("platformName") .. " " .. system.getInfo("platformVersion") .. 
-            					", Device: " .. system.getInfo("name") .. " - " .. system.getInfo("model") .. 
-            					", Arhitecure: " .. system.getInfo("architectureInfo")
-            
-            local prevLogIndex = log.currentFileIndex - 1
-			if (prevLogIndex < 1) then
-				prevLogIndex = log.numberOfRollingFiles
-			end
-			local fileName1 = log.fileNamePrefix .. "_" .. log.currentFileIndex .. ".txt"
-			local fileName2 = log.fileNamePrefix .. "_" .. prevLogIndex .. ".txt"
-
-			-- Add log files as attachments
-			local attachments = nil;
-			if (fileExists(fileName2, log.directory)) then
-				attachments = {
-							      { baseDir=log.directory, filename=fileName1, type="text/plain" },
-							      { baseDir=log.directory, filename=fileName2, type="text/plain" },
-							  }
-			else
-				attachments = {
-							      { baseDir=log.directory, filename=fileName1, type="text/plain" },
-							  }
-			end
-
-			-- Send email to administrator
-            local options =
-				{
-				   to = { log.alertEmail },
-				   subject = log.emailSubject .. " - " .. system.getInfo("appName"),
-				   isBodyHtml = false,
-				   body = log.emailPreText .. deviceInfo .. log.emailPostText,
-				   attachment = attachments,
-				}
-			native.showPopup("mail", options)
+            sendEmail(true)
         end
     end
 end
@@ -326,6 +343,11 @@ function log:log( ... )
       	end
       end
    end
+end
+
+-- Send log files to administrator via email
+function log:sendEmail()
+	 sendEmail(false)
 end
 
 -- Attach event listener to catch and log errors
