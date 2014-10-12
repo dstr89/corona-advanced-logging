@@ -49,7 +49,7 @@ log.debugCalls = true
 -- Maximum depth for caller traceing
 log.debugCallDepth = 4
 -- Maximum log file size in Bytes
-log.maxFileSizeInBytes = 20480
+log.maxFileSizeInBytes = 102400
 -- Database table name where to save log parameters
 log.tableName = "log_params"
 -- Set to true if you want an alert to popup on runtime errors
@@ -319,7 +319,7 @@ function log:set(db, alertEmail, alertErrors, fileNamePrefix, directory, numberO
 	log.numberOfRollingFiles = numberOfRollingFiles or 4
 	log.debugCalls = debugCalls or true
 	log.debugCallDepth = debugCallDepth or 3
-	log.maxFileSizeInBytes = maxFileSizeInBytes or 5120
+	log.maxFileSizeInBytes = maxFileSizeInBytes or 102400
 end
 
 -- Log multiple info messages
