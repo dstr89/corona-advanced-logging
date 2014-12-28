@@ -46,6 +46,10 @@ log.directory = system.DocumentsDirectory
 log.numberOfRollingFiles = 6
 -- Set to true if you want to trace module name and line number on each info log message
 log.debugCalls = true
+-- Set to true if you want to log info messages into files
+log.logInfoInFiles = true
+-- Set to true if you want to log info messages into console (print)
+log.logInfoInConsole = true
 -- Maximum depth for caller traceing
 log.debugCallDepth = 4
 -- Maximum log file size in Bytes
@@ -100,7 +104,7 @@ local function logInFile(message, level, callerInfo, stackTrace )
 
 		-- Insert default value if no values are present, else get value from database
 		local value = nil
-		for row in db:nrows("SELECT * FROM " .. log.tableName .. " WHERE name = 'lastFileIndex'") do
+		for row in log.db:nrows("SELECT * FROM " .. log.tableName .. " WHERE name = 'lastFileIndex'") do
 			value = row.value
 		end
 		if (value == nil) then
@@ -298,10 +302,14 @@ local function doLog(message)
 		end
 	end
 	-- Log in file
-	logInFile(message, "INFO", callerInfo, nil)
+	if (log.logInfoInFiles == true) then
+		logInFile(message, "INFO", callerInfo, nil)
+	end
 	
 	-- Log in console
-	print(message)
+	if (log.logInfoInConsole == true) then
+		print(message)
+	end
 end
 	
 -------------------------------------------------

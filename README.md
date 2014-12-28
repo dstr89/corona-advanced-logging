@@ -118,6 +118,33 @@ log:sendEmail()
 ```
 
 
+##Production notes##
+
+Once your application goes into production you should turn off logging to optimize performance
+
+In your main.lua set:
+
+```lua
+-- SETUP ADVANCED LOGGING MODULE
+log:set(dba.db, "youremail@gmail.com")
+log.debugCalls = false
+log.logInFiles = false
+log.alertErrors = false
+log.logInfoInConsole = false
+```
+
+In your build.settings set:
+
+```lua
+settings = {
+	build = {
+        neverStripDebugInfo = false
+    }
+}
+```
+
+
+
 ##Log file contents##
 
 Here is an example of log file contents.
@@ -135,3 +162,4 @@ Administrator receives an email containing device / platform info and log files.
 ![alt tag](https://raw.githubusercontent.com/promptcode/CoronaAdvancedLogging/master/Images/ss2.png)
 
 And thats it. Feel free to contact me with your suggestions (see email adress in image above).
+
