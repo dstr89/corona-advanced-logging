@@ -120,13 +120,13 @@ log:sendEmail()
 
 ##Production notes##
 
-Once your application goes into production you should turn off logging to optimize performance
+Once your application goes into production you should turn off logging to optimize performance.
 
 In your main.lua set:
 
 ```lua
 -- SETUP ADVANCED LOGGING MODULE
-log:set(dba.db, "youremail@gmail.com")
+log:set(db, "youremail@gmail.com")
 log.debugCalls = false
 log.logInFiles = false
 log.alertErrors = false
